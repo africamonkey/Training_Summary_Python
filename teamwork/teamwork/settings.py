@@ -39,10 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 	'simple_history',
-
+    'widget_tweaks', 
 	'contests',
 	'users',
 	'index_page',
+    'summary',
 ]
 
 MIDDLEWARE = [

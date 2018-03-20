@@ -2,16 +2,49 @@
 
 {% block content %}
 
-	<p>Contest Detail</p>
-		<li>
-			<p> {{ contest.name }} </p>
-			<p> {{ contest.source }} </p>
-			<p> {{ contest.date }} </p>
-			<p> {{ contest.num_of_problem }} </p>
-			<p>
-				<a href="{% url 'contests:edit_contest' contest.id %}">edit contest</a>
-			</p>
-		</li>
-	</p>
+
+<div class="section">
+	<h2>{{ contest.name }}</h2>
+	<p>Source: {{ contest.source }}</p>
+	<p>Start Time: {{ contest.date }}</p>
+	<p>Number of problems: {{ contest.num_of_problem }}</p>
+	<div style="text-align:right">
+		<a class="btn btn-sm btn-out-primary" href="{% url 'contests:edit_contest' contest.id %}">Edit Contest</a>
+	</div>
+</div>
+
+<div class="section">
+	<h4>Contest Result</h4>
+	<table class="table" id="result_table">
+		<thead>
+			<tr>
+				<th scope="col">Team</th>
+				{% for i in problem %}
+				<th scope="col">{{ i }}</th>
+				{% endfor %}
+				<th scope="col">Summary</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in summarylist %}
+			<tr>
+				<th><a href="{% url 'users:show_user' i.head %}">{{ i.tail }}</a></th>
+				{% for j in i.body %}
+				<th><p style="{{ j.0|yesno:'color:green;,color:red;,color:blue;' }}">{{ j.1 }}</p></th>
+				{% endfor %}
+				<th><a href="{% url 'summary:display_status' i.head contest.id %}">View</a></th>
+			</tr>
+			{% empty %}
+			<tr>
+				<th> No Status have been added yet. </th>
+			</tr>
+			{% endfor %}
+		</tbody>
+			
+	</table>
+</div>
+
 
 {% endblock content %}
+
+

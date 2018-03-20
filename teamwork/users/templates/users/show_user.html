@@ -1,0 +1,36 @@
+{% extends "index_page/base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block title %}Team Information{% endblock title %}
+{% block content %}
+<div class="section">
+  <p>Username: {{ user.username }}</p>
+  <p>Team Name: {{ profile.team_name }}</p>
+  <p>Team Member 1: {{profile.team_member_1}}</p>
+  <p>Team Member 2: {{profile.team_member_2}}</p>
+  <p>Team Member 3: {{profile.team_member_3}}</p>
+  <p>Team Description: {{profile.team_description}}</p>
+  <table class="table">
+    <thead>
+      <th>Contest Name</th>
+      {% for i in problem %}
+      <th>{{ i }}</th>
+      {% endfor %}
+      <th>Summary</th>
+    </thead>
+    {% for i in summarylist %}
+    <tbody>
+      <th><a href="{% url 'contests:display_contest' i.head %}">{{ i.tail }}</a></th>
+      {% for j in i.body %}
+      <th>{{ j }}</th>
+      {% endfor %}
+      <th><a href="{% url 'summary:display_status' user.id i.head %}">View</a></th>
+    </tbody>
+    {% empty %}
+    <tbody>
+      <th> No Status have been added yet. </th>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+{% endblock content %}

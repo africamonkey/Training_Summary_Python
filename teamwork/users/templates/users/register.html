@@ -1,24 +1,26 @@
 {% extends "users/base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block title %}Register{% endblock title %}
-
 {% block content %}
-  <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10 col-sm-12">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">Register</h3>
-          <form method="post" action="{% url 'users:register' %}">
-              {% csrf_token %}
-              {{ user_form.as_p }}
-              {{ team_form.as_p }}
-              <button name="submit">register</button>
-              <input type="hidden" name="next" value="{% url 'index_page:index' %}" />
-            </form> 
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <form class="form-users" method="post" action="{% url 'users:register' %}" >
+    {% csrf_token %}
+    <h2>Register</h2>
+    <hr>
+    <div class="form-group">
+      {% include 'users/forms/user_form.html' %}
+      {% include 'users/forms/team_form.html' %}
+    </div>        
+    <button name="submit" class="btn btn-primary">Register</button>
+    <a class="btn btn-outline-primary" href="/">Go Back</a>
+    <input type="hidden" name="next" value="{% url 'index_page:index' %}" />
+  </form>  
+  <p>Have an account? <a href="{% url 'users:login' %}">Click</a> to log in.</p> 
+  </div>   
+
 
 
 {% endblock content %}
+
